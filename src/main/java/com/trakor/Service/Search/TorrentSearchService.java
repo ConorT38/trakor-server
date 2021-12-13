@@ -19,7 +19,6 @@ public class TorrentSearchService {
     @Autowired
     private @Qualifier("searchCache") SearchDAO searchCacheRepo;
 
-    
     /** 
      * Get list of torrent results that match a given search string.
      * 
