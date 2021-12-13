@@ -1,6 +1,7 @@
 package com.trakor.DAO.Database;
 
 import java.net.Inet4Address;
+import java.net.UnknownHostException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +12,8 @@ import com.trakor.Model.Peer;
 import com.trakor.Model.Seed;
 import com.trakor.Model.Torrent;
 
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 
@@ -18,6 +21,7 @@ import org.springframework.stereotype.Repository;
  * Search Database Repository class.
  */
 @Repository
+@Qualifier("searchDatabase")
 public class SearchDatabaseRepository implements SearchDAO{
 
     @Override

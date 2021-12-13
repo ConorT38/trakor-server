@@ -6,6 +6,7 @@ import com.trakor.DAO.SearchDAO;
 import com.trakor.Model.Torrent;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -13,11 +14,14 @@ import org.springframework.stereotype.Service;
 public class TorrentSearchService {
     
     @Autowired
-    SearchDAO searchDAO;
+    @Qualifier("searchDatabase") SearchDAO searchDatabaseRepo;
+
+    @Autowired
+    @Qualifier("searchCache") SearchDAO searchCacheRepo;
 
     public ResponseEntity<List<Torrent>> getTorrentSearchResults(String searchTerm) {
         // TODO Auto-generated method stub
-        return searchDAO.getTorrentSearchResults(searchTerm);
+        return searchCacheRepo.getTorrentSearchResults(searchTerm);
     }
 
 }
