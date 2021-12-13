@@ -6,6 +6,8 @@ import com.trakor.DAO.PeerDAO;
 import com.trakor.Model.Peer;
 import com.trakor.Model.Seed;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class PeerDatabaseRepository implements PeerDAO {
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Override
     public void addPeer(Peer peer) {

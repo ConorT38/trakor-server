@@ -12,9 +12,13 @@ import com.trakor.Model.Peer;
 import com.trakor.Model.Seed;
 import com.trakor.Model.Torrent;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -22,30 +26,35 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 @Qualifier("searchDatabase")
-public class SearchDatabaseRepository implements SearchDAO{
+public class SearchDatabaseRepository implements SearchDAO {
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     @Override
-    public ResponseEntity<List<Torrent>> getTorrentSearchResults(String searchTerm) {
-        File file = new File(1L, "MovieDick.mpv", 100000L,new Date(System.currentTimeMillis()));
+    public List<Torrent> getTorrentSearchResults(String searchTerm) {
+        File file = new File(1L, "MobyDick.mpv", 100000L, new Date(System.currentTimeMillis()));
         int filePieces = 10;
-        
-        try{
-        Peer peer = new Peer(Inet4Address.getLocalHost(),false, false,0, 1000);
-        List<Peer> peers = new ArrayList<Peer>();
-        peers.add(peer);
-        
-        Seed seed = new Seed(file, Inet4Address.getLocalHost(), true);
-        List<Seed> seeders = new ArrayList<Seed>();
-        seeders.add(seed);
 
-        Torrent torrent = new Torrent(file, filePieces, peers, seeders);
-        List<Torrent> torrents = new ArrayList<Torrent>();
-        torrents.add(torrent);
+        try {
+            Peer peer = new Peer(Inet4Address.getLocalHost(), false, false, 0, 1000);
+            List<Peer> peers = new ArrayList<Peer>();
+            peers.add(peer);
 
-        return ResponseEntity.ok().body(torrents);
-        } catch(UnknownHostException ex){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            Seed seed = new Seed(file, Inet4Address.getLocalHost(), true);
+            List<Seed> seeders = new ArrayList<Seed>();
+            seeders.add(seed);
+
+            Torrent torrent = new Torrent(file, filePieces, peers, seeders);
+            List<Torrent> torrents = new ArrayList<Torrent>();
+            torrents.add(torrent);
+
+            return torrents;
+        } catch (UnknownHostException ex) {
+            return new ArrayList<Torrent>();
         }
+
     }
-    
+
 }

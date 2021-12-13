@@ -4,8 +4,13 @@ import java.util.List;
 
 import com.trakor.Model.Torrent;
 
-import org.springframework.http.ResponseEntity;
 
 public interface SearchDAO {
-    ResponseEntity<List<Torrent>> getTorrentSearchResults(String searchTerm);
+    
+    /**
+     * Get list of torrents that match a given {@param searchTerm}. 
+     * @param searchTerm
+     * @return List of {@see com.trakor.Model.Torrent}
+     */
+    List<Torrent> getTorrentSearchResults(String searchTerm);
 }

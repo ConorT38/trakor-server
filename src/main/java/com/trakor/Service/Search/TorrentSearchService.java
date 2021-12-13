@@ -12,16 +12,22 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class TorrentSearchService {
+
+    @Autowired
+    private @Qualifier("searchDatabase") SearchDAO searchDatabaseRepo;
+
+    @Autowired
+    private @Qualifier("searchCache") SearchDAO searchCacheRepo;
+
     
-    @Autowired
-    @Qualifier("searchDatabase") SearchDAO searchDatabaseRepo;
-
-    @Autowired
-    @Qualifier("searchCache") SearchDAO searchCacheRepo;
-
+    /** 
+     * Get list of torrent results that match a given search string.
+     * 
+     * @param searchTerm search term for matching torrent results.
+     * @return ResponseEntity<List<Torrent>>
+     */
     public ResponseEntity<List<Torrent>> getTorrentSearchResults(String searchTerm) {
-        // TODO Auto-generated method stub
-        return searchCacheRepo.getTorrentSearchResults(searchTerm);
+        return ResponseEntity.ok().body(searchCacheRepo.getTorrentSearchResults(searchTerm));
     }
 
 }
