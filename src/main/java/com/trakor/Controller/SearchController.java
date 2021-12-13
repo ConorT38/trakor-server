@@ -25,6 +25,15 @@ public class SearchController {
     @Autowired
     TorrentSearchService searchService;
 
+    /**
+     * Rest endpoint used to search for torrents in Trakor.
+     * 
+     * GET /api/v1/search/torrents/{searchTerm}
+     * 
+     * @param searchTerm Search term for torrents.
+     * @param headers    Http headers.
+     * @return HTTP response with Torrents stored JSON format.
+     */
     @GetMapping("/torrents/{searchTerm}")
     @CrossOrigin(origins = "*")
     public ResponseEntity<List<Torrent>> getTorrentSearchResults(
