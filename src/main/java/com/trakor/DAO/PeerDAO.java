@@ -12,10 +12,14 @@ public interface PeerDAO {
 
     void addPeer(Peer peer);
 
+    void addPeers(List<Peer> peer);
+
+    void updatePeer(Peer peer);
+
     void removePeer(long peerId);
 
-    List<Peer> getPeersByFileId(long fileId);
+    List<Peer> getPeersByTorrentId(long torrentId);
 
-    List<Seed> getSeedersByFileId(long fileId);
+    List<Seed> getSeedersByTorrentId(long torrentId);
 
 }

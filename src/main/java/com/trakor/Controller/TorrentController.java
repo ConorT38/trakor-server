@@ -17,21 +17,28 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
 @RestController
-@RequestMapping("/api/v1/torrent")
+@RequestMapping("/api/v1/search")
 public class TorrentController {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     TorrentSearchService searchService;
 
-    @GetMapping("/peers/{fileId}")
+    /**
+     * Rest endpoint used to search for torrents in Trakor.
+     * 
+     * GET /api/v1/search/torrents/{searchTerm}
+     * 
+     * @param searchTerm Search term for torrents.
+     * @param headers    Http headers.
+     * @return HTTP response with Torrents stored JSON format.
+     */
+    @GetMapping("/torrents/{searchTerm}")
     @CrossOrigin(origins = "*")
     public ResponseEntity<List<Torrent>> getTorrentSearchResults(
             @PathVariable(value = "searchTerm") String searchTerm, @RequestHeader HttpHeaders headers) {
         log.info("Search for: '" + searchTerm + "'");
         return searchService.getTorrentSearchResults(searchTerm);
     }
-
 }

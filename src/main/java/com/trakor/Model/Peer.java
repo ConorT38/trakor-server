@@ -10,13 +10,16 @@ import java.net.InetAddress;
  */
 public class Peer {
     private InetAddress ipAddress;
+    private FileInfo fileInfo;
     private boolean isLeeching;
     private boolean isSeeding;
     private long seedStartByte;
     private long seedEndByte;
 
-    public Peer(InetAddress ipAddress, boolean isLeeching, boolean isSeeding, long seedStartByte, long seedEndByte) {
+    public Peer(InetAddress ipAddress, FileInfo fileInfo, boolean isLeeching, boolean isSeeding, long seedStartByte,
+            long seedEndByte) {
         this.setIpAddress(ipAddress);
+        this.setFileInfo(fileInfo);
         this.setLeeching(isLeeching);
         this.setSeeding(isSeeding);
         this.setSeedStartByte(seedStartByte);
@@ -35,6 +38,20 @@ public class Peer {
      */
     public void setIpAddress(InetAddress ipAddress) {
         this.ipAddress = ipAddress;
+    }
+
+    /**
+     * @return FileInfo
+     */
+    public FileInfo getFileInfo() {
+        return fileInfo;
+    }
+
+    /**
+     * @param fileInfo
+     */
+    public void setFileInfo(FileInfo fileInfo) {
+        this.fileInfo = fileInfo;
     }
 
     /**

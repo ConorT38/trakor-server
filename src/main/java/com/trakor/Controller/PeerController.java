@@ -2,7 +2,9 @@ package com.trakor.Controller;
 
 import java.util.List;
 
+import com.trakor.Model.Peer;
 import com.trakor.Model.Torrent;
+import com.trakor.Service.Peers.PeerService;
 import com.trakor.Service.Search.TorrentSearchService;
 
 import org.slf4j.Logger;
@@ -17,28 +19,21 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
 @RestController
-@RequestMapping("/api/v1/search")
-public class SearchController {
+@RequestMapping("/api/v1/torrent")
+public class PeerController {
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    TorrentSearchService searchService;
+    PeerService peerService;
 
-    /**
-     * Rest endpoint used to search for torrents in Trakor.
-     * 
-     * GET /api/v1/search/torrents/{searchTerm}
-     * 
-     * @param searchTerm Search term for torrents.
-     * @param headers    Http headers.
-     * @return HTTP response with Torrents stored JSON format.
-     */
-    @GetMapping("/torrents/{searchTerm}")
+    @GetMapping("/peers/{fileId}")
     @CrossOrigin(origins = "*")
-    public ResponseEntity<List<Torrent>> getTorrentSearchResults(
-            @PathVariable(value = "searchTerm") String searchTerm, @RequestHeader HttpHeaders headers) {
-        log.info("Search for: '" + searchTerm + "'");
-        return searchService.getTorrentSearchResults(searchTerm);
+    public ResponseEntity<List<Peer>> getPeersByTorrentId(
+            @PathVariable(value = "fileId") long fileId, @RequestHeader HttpHeaders headers) {
+        log.info("Getting peers for fileId: '" + fileId + "'");
+        return peerService.getPeersByTorrentId(fileId);
     }
+
 }

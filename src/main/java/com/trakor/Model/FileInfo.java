@@ -5,14 +5,20 @@ import java.sql.Date;
 /**
  * Torrent file information.
  */
-public class File {
+public class FileInfo {
     private Long fileId;
     private String fileName;
     private Long fileSize;
     private Date uploadDate;
 
-    public File(Long fileId, String fileName, Long fileSize, Date uploadDate) {
+    public FileInfo(Long fileId, String fileName, Long fileSize, Date uploadDate) {
         this.setFileId(fileId);
+        this.setFileName(fileName);
+        this.setFileSize(fileSize);
+        this.setUploadDate(uploadDate);
+    }
+
+    public FileInfo(String fileName, Long fileSize, Date uploadDate) {
         this.setFileName(fileName);
         this.setFileSize(fileSize);
         this.setUploadDate(uploadDate);

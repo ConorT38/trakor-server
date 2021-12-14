@@ -7,11 +7,11 @@ import java.net.InetAddress;
  * and is currently uploading the file.
  */
 public class Seed {
-    private File fileInfo;
+    private FileInfo fileInfo;
     private InetAddress ipAddress;
     private boolean isSeeding;
 
-    public Seed(File fileInfo, InetAddress ipAddress, boolean isSeeding) {
+    public Seed(FileInfo fileInfo, InetAddress ipAddress, boolean isSeeding) {
         this.setFileInfo(fileInfo);
         this.setIpAddress(ipAddress);
         this.setSeeding(isSeeding);
@@ -27,14 +27,14 @@ public class Seed {
     /**
      * @return File
      */
-    public File getFileInfo() {
+    public FileInfo getFileInfo() {
         return fileInfo;
     }
 
     /**
      * @param fileInfo
      */
-    public void setFileInfo(File fileInfo) {
+    public void setFileInfo(FileInfo fileInfo) {
         this.fileInfo = fileInfo;
     }
 

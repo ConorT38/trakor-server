@@ -6,7 +6,7 @@ import java.util.List;
  * Torrent information for file.
  */
 public class Torrent {
-    private File file;
+    private FileInfo file;
     private int filePieces;
     private List<Peer> peers;
     private List<Seed> seeders;
@@ -20,7 +20,7 @@ public class Torrent {
      * @param peers      List of all peers downloading this torrent.
      * @param seeders    List of all seeders of the torrent.
      */
-    public Torrent(File file, int filePieces, List<Peer> peers, List<Seed> seeders) {
+    public Torrent(FileInfo file, int filePieces, List<Peer> peers, List<Seed> seeders) {
         this.setFile(file);
         this.setFilePieces(filePieces);
         this.setSeeders(seeders);
@@ -30,14 +30,14 @@ public class Torrent {
     /**
      * @return File
      */
-    public File getFile() {
+    public FileInfo getFile() {
         return this.file;
     }
 
     /**
      * @param file
      */
-    public void setFile(File file) {
+    public void setFile(FileInfo file) {
         this.file = file;
     }
 
