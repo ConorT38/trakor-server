@@ -80,6 +80,7 @@ public class TorrentDatabaseRepository implements TorrentDAO {
 
             return torrents;
         } catch (UnknownHostException ex) {
+            log.error("Could not get torrent search results: [" + ex.getLocalizedMessage() + "]");
             return new ArrayList<Torrent>();
         }
 

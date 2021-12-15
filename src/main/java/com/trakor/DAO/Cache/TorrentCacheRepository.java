@@ -5,6 +5,9 @@ import java.net.UnknownHostException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
+import javax.annotation.PostConstruct;
 
 import com.trakor.DAO.TorrentDAO;
 import com.trakor.Model.FileInfo;
@@ -14,7 +17,10 @@ import com.trakor.Model.Torrent;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -23,6 +29,17 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Qualifier("torrentCache")
 public class TorrentCacheRepository implements TorrentDAO {
+    private static final String KEY = "Torrent";
+
+    @Autowired
+    private RedisTemplate<String, Object> redisTemplate;
+    private HashOperations<String, UUID, Torrent> hashOperations;
+
+    @PostConstruct
+    private void init() {
+        hashOperations = redisTemplate.opsForHash();
+    }
+
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
     /**
@@ -30,8 +47,7 @@ public class TorrentCacheRepository implements TorrentDAO {
      */
     @Override
     public void addTorrent(Torrent torrent) {
-        // TODO Auto-generated method stub
-
+        hashOperations.put(KEY, torrent.getId(), torrent);
     }
 
     /**
@@ -76,7 +92,7 @@ public class TorrentCacheRepository implements TorrentDAO {
 
             return torrents;
         } catch (UnknownHostException ex) {
-            log.error("Could not get Torrent peers: ["+ex.getLocalizedMessage()+"]");
+            log.error("Could not get Torrent peers: [" + ex.getLocalizedMessage() + "]");
             return new ArrayList<Torrent>();
         }
     }

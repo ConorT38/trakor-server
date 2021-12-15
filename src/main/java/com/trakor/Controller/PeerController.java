@@ -3,9 +3,7 @@ package com.trakor.Controller;
 import java.util.List;
 
 import com.trakor.Model.Peer;
-import com.trakor.Model.Torrent;
 import com.trakor.Service.Peers.PeerService;
-import com.trakor.Service.Search.TorrentSearchService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
