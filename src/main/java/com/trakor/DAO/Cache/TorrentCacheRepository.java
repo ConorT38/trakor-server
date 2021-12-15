@@ -31,9 +31,13 @@ import org.springframework.stereotype.Repository;
 public class TorrentCacheRepository implements TorrentDAO {
     private static final String KEY = "Torrent";
 
-    @Autowired
     private RedisTemplate<String, Object> redisTemplate;
     private HashOperations<String, UUID, Torrent> hashOperations;
+
+    @Autowired
+    public TorrentCacheRepository(RedisTemplate<String, Object> redisTemplate) {
+        this.redisTemplate = redisTemplate;
+    }
 
     @PostConstruct
     private void init() {

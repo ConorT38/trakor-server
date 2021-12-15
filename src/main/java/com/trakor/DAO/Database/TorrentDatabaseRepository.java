@@ -14,6 +14,7 @@ import com.trakor.Model.Torrent;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -61,6 +62,7 @@ public class TorrentDatabaseRepository implements TorrentDAO {
      * {@inheritDoc}
      */
     @Override
+    @Cacheable(value = "torrentSearchResultCache")
     public List<Torrent> getTorrentSearchResults(String searchTerm) {
         FileInfo file = new FileInfo(1L, "MobyDick.mpv", 100000L, new Date(System.currentTimeMillis()));
         int filePieces = 10;
