@@ -53,9 +53,17 @@ public class TorrentDatabaseRepository implements TorrentDAO {
      * {@inheritDoc}
      */
     @Override
-    public void removeTorrent(long torrentId) {
+    public void deleteTorrent(String torrentId) {
         // TODO Auto-generated method stub
 
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Torrent getTorrentById(String torrentId) {
+        return null;
     }
 
     /**

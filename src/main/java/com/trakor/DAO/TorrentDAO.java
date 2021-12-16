@@ -24,11 +24,19 @@ public interface TorrentDAO {
     void addTorrents(List<Torrent> torrents);
 
     /**
-     * Remove torrent record from data source.
+     * Delete torrent record from data source.
      * 
      * @param torrentId torrent identifier to be deleted from data source.
      */
-    void removeTorrent(long torrentId);
+    void deleteTorrent(String torrentId);
+
+    /**
+     * Get torrent by id.
+     * 
+     * @param torrentId unique torrent id.
+     * @return {@see com.trakor.Model.Torrent}
+     */
+    Torrent getTorrentById(String torrentId);
 
     /**
      * Get list of torrents that match a given {@param searchTerm}.

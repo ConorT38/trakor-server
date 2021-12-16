@@ -4,8 +4,9 @@ import java.net.Inet4Address;
 import java.net.UnknownHostException;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
@@ -29,10 +30,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Qualifier("torrentCache")
 public class TorrentCacheRepository implements TorrentDAO {
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
+
     private static final String KEY = "Torrent";
 
     private RedisTemplate<String, Object> redisTemplate;
-    private HashOperations<String, UUID, Torrent> hashOperations;
+    private HashOperations<String, String, Torrent> hashOperations;
 
     @Autowired
     public TorrentCacheRepository(RedisTemplate<String, Object> redisTemplate) {
@@ -44,14 +47,12 @@ public class TorrentCacheRepository implements TorrentDAO {
         hashOperations = redisTemplate.opsForHash();
     }
 
-    private final Logger log = LoggerFactory.getLogger(this.getClass());
-
     /**
      * {@inheritDoc}
      */
     @Override
     public void addTorrent(Torrent torrent) {
-        hashOperations.put(KEY, torrent.getId(), torrent);
+        hashOperations.put(KEY, torrent.getId().toString(), torrent);
     }
 
     /**
@@ -59,17 +60,28 @@ public class TorrentCacheRepository implements TorrentDAO {
      */
     @Override
     public void addTorrents(List<Torrent> torrents) {
-        // TODO Auto-generated method stub
+        Map<String, Torrent> torrentsMap = new HashMap<String, Torrent>();
+        for (Torrent torrent : torrents) {
+            torrentsMap.put(torrent.getId().toString(), torrent);
+        }
 
+        hashOperations.putAll(KEY, torrentsMap);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void removeTorrent(long torrentId) {
-        // TODO Auto-generated method stub
+    public void deleteTorrent(String torrentId) {
+        hashOperations.delete(KEY, torrentId);
+    }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Torrent getTorrentById(String torrentId) {
+        return (Torrent) hashOperations.get(KEY, torrentId);
     }
 
     /**
